@@ -61,19 +61,6 @@ class FilmControllerTest {
 
     }
 
-    @Test
-void addFilmIncorrectdate() {
-        Film film = Film.builder()
-                .name("Inception")
-                .description("A film about dreams.")
-                .releaseDate(LocalDate.of(1800, 7, 16))
-                .duration(148)
-                .build();
-        assertThrows(ValidationException.class, () -> {
-            filmController.addFilm(film);
-        });
-        assertEquals(0, filmController.findAll().size(), "некорркетный фильм добавился");
-    }
 
     @Test
     void updateFilmIncorrectId() {

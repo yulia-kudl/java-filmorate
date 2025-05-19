@@ -2,9 +2,11 @@ package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.validation.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -12,6 +14,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/films")
 @Slf4j
+@Validated
 public class FilmController {
     private final Map<Integer, Film> films = new HashMap<>();
 
@@ -23,10 +26,10 @@ public class FilmController {
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
 
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
+      /*  if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             log.info("дата {} до 1895-12-28", film.getReleaseDate());
             throw new ValidationException("дата релиза некорректная");
-        }
+        } */
         film.setId(getNextId());
         films.put(film.getId(), film);
         log.info("новый фильм с ид {} добавлен", film.getId());

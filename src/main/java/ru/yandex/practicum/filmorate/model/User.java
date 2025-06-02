@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import lombok.Builder;
 import lombok.Data;
+
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -19,4 +22,11 @@ public class User {
     String name;
     @Past(message = "дата рождения должна быть в прошлом")
     LocalDate birthday;
+    @Builder.Default
+    Set<Integer> friends = new HashSet<>();
+
+
+    public void setFriends(Set<Integer> friends) {
+        this.friends = (friends == null) ? new HashSet<>() : friends;
+    }
 }

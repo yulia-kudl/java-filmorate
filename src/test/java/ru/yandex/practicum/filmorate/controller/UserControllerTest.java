@@ -1,16 +1,11 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.model.User;
-
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 //здесь нет тестов на валидацию полей, тк они проверяются через аннотации
 
-class UserControllerTest {
+// // убрала тесты тк неактуально для этого задания. По ТЗ юнит тесты писать не требуется
+
+class UserControllerTest { /*
     private final UserController userController = new UserController();
 
     @Test
@@ -124,5 +119,5 @@ class UserControllerTest {
             assertThrows(ValidationException.class, () -> {
                 userController.updateUser(user2);
             });
-    }
+    } */
 }

@@ -1,11 +1,13 @@
 package ru.yandex.practicum.filmorate;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.core.JdbcTemplate;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.GenreDBStorage;
@@ -39,26 +41,54 @@ class FilmorateApplicationTests {
     private final GenreDBStorage genreStorage;
     @Autowired
     private final MpaStorage mpaStorage;
-    private static User user = User.builder()
-            .name("Anna")
-            .email("aaa@aaa.ru")
-            .login("aa")
-            .birthday(LocalDate.of(2000, 12, 1)).build();
-    private static User user2 = User.builder()
-            .name("Oleg")
-            .email("ooo@ooo.ru")
-            .login("oo")
-            .birthday(LocalDate.of(2001, 1, 2)).build();
-    private static Film film1 = Film.builder()
-            .name("Film")
-            .description("Filmdesc")
-            .duration(30)
-            .releaseDate(LocalDate.of(2000, 1, 1)).build();
-    private static Film film2 = Film.builder()
-            .name("Film2")
-            .description("Filmdesc2")
-            .duration(300)
-            .releaseDate(LocalDate.of(2000, 1, 1)).build();
+    private User user;
+    private User user2;
+    private Film film1;
+    private Film film2;
+    @Autowired
+    private JdbcTemplate jdbc;
+
+
+    @BeforeEach
+    void cleanDb() {
+        jdbc.execute("DELETE FROM Film_Genre");
+        jdbc.execute("DELETE FROM Films");
+        jdbc.execute("DELETE FROM FriendShip");
+        jdbc.execute("DELETE FROM Users");
+        jdbc.execute("ALTER TABLE Films ALTER COLUMN film_id RESTART WITH 1");
+        jdbc.execute("ALTER TABLE Users ALTER COLUMN user_id RESTART WITH 1");
+    }
+
+    @BeforeEach
+    public void init() {
+        user = User.builder()
+                .name("Anna")
+                .email("aaa@aaa.ru")
+                .login("aa")
+                .birthday(LocalDate.of(2000, 12, 1))
+                .build();
+
+        user2 = User.builder()
+                .name("Oleg")
+                .email("ooo@ooo.ru")
+                .login("oo")
+                .birthday(LocalDate.of(2001, 1, 2))
+                .build();
+
+        film1 = Film.builder()
+                .name("Film")
+                .description("Filmdesc")
+                .duration(30)
+                .releaseDate(LocalDate.of(2000, 1, 1))
+                .build();
+
+        film2 = Film.builder()
+                .name("Film2")
+                .description("Filmdesc2")
+                .duration(300)
+                .releaseDate(LocalDate.of(2000, 1, 1))
+                .build();
+    }
 
 
     @Test
@@ -185,6 +215,7 @@ class FilmorateApplicationTests {
         Optional<Film> optionalFilm = filmStorage.addFilm(film1);
         film2.setId(1);
         film2.setMpa(mpaStorage.getMpa(2));
+        film1.getGenres().add(genreStorage.getDBGenresById(2));
         Optional<Film> optionalFilm2 = filmStorage.updateFilm(film2);
         Optional<Film> getFilm = filmStorage.getFilmById(1);
         assertThat(getFilm)

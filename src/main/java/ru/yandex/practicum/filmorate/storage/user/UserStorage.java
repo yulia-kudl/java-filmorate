@@ -3,14 +3,15 @@ package ru.yandex.practicum.filmorate.storage.user;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface UserStorage {
 
     public Collection<User> getUsers();
 
-    public User addUser(User user);
+    public Optional<User> addUser(User user);
 
-    public User updateUser(User user);
+    public Optional<User> updateUser(User user);
 
     boolean ifUserExists(Integer userId);
 

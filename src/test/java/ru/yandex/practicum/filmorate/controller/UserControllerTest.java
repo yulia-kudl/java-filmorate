@@ -5,7 +5,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 // // убрала тесты тк неактуально для этого задания. По ТЗ юнит тесты писать не требуется
 
-class UserControllerTest { /*
+/*class UserControllerTest {
     private final UserController userController = new UserController();
 
     @Test
@@ -120,4 +120,4 @@ class UserControllerTest { /*
                 userController.updateUser(user2);
             });
     } */
-}
+//}

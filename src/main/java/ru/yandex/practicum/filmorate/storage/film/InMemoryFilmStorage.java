@@ -6,11 +6,9 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+@Deprecated
 @Component
 @Slf4j
 public class InMemoryFilmStorage implements FilmStorage {
@@ -22,16 +20,16 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film addFilm(Film film) {
+    public Optional<Film> addFilm(Film film) {
         film.setId(getNextId());
         film.setLikes(null);
         films.put(film.getId(), film);
         log.info("новый фильм с ид {} добавлен", film.getId());
-        return film;
+        return Optional.of(film);
     }
 
     @Override
-    public Film updateFilm(Film film) {
+    public Optional<Film> updateFilm(Film film) {
         if (film.getId() == null) {
             log.info("id не может быть пустым");
             throw new ValidationException("id должен быть указан");
@@ -57,7 +55,7 @@ public class InMemoryFilmStorage implements FilmStorage {
             oldFilm.setDuration(film.getDuration());
         }
         log.info("фильм с id {} обновлен", film.getId());
-        return oldFilm;
+        return Optional.of(oldFilm);
     }
 
     @Override
@@ -82,6 +80,11 @@ public class InMemoryFilmStorage implements FilmStorage {
                 .sorted(Comparator.comparingInt((Film film) -> film.getLikes().size()).reversed())
                 .limit(count)
                 .toList();
+    }
+
+    @Override
+    public Optional<Film> getFilmById(Integer id) {
+        return Optional.empty();
     }
 
 

@@ -6,7 +6,7 @@ package ru.yandex.practicum.filmorate.controller;
 // убрала тесты тк неактуально для этого задания. По ТЗ юнит тесты писать не требуется
 
 
-class FilmControllerTest {
+//class FilmControllerTest {
    /* FilmService filmController = new FilmController();
 
     @Test
@@ -98,4 +98,4 @@ class FilmControllerTest {
             filmController.updateFilm(film3);
         });
     } */
-}
+//}

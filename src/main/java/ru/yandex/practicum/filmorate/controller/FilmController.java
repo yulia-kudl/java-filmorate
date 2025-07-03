@@ -10,6 +10,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/films")
@@ -24,13 +25,18 @@ public class FilmController {
         return filmService.getFilms();
     }
 
+    @GetMapping("/{id}")
+    public Optional<Film> findFilmById(@PathVariable Integer id) {
+        return filmService.getFilmById(id);
+    }
+
     @PostMapping
-    public Film addFilm(@Valid @RequestBody Film film) {
+    public Optional<Film> addFilm(@Valid @RequestBody Film film) {
         return filmService.addFilm(film);
     }
 
     @PutMapping
-    Film updateFilm(@RequestBody Film film) {
+    public Optional<Film> updateFilm(@RequestBody Film film) {
         return filmService.updateFilm((film));
     }
 

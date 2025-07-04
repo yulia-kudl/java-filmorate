@@ -17,14 +17,6 @@ public class GenreDBStorage {
     static final String CHECK_GENRE = "SELECT COUNT(*) FROM Genre WHERE genre_id = ?;";
     static final String GET_GENRES = "SELECT * FROM Genre;";
     static final String GET_GENRES_BY_ID = "SELECT * FROM Genre WHERE genre_id =?;";
-    static final String ADD_FILM_GENRE = "INSERT INTO Film_genre VALUES (?,?);";
-
-   /* public final void addFilmGenres(int filmId, Set<Genre> genres) {
-        for ( Genre genre : genres) {
-            jdbc.update(ADD_FILM_GENRE, filmId, genre.getId());
-        }
-    } */
-
 
     public boolean ifGenreExists(Integer id) {
         Integer count = jdbc.queryForObject(CHECK_GENRE, Integer.class, id);

@@ -8,6 +8,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -22,13 +23,13 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(@Valid @RequestBody User user) {
+    public Optional<User> addUser(@Valid @RequestBody User user) {
 
         return userService.addUser(user);
     }
 
     @PutMapping
-    public User updateUser(@RequestBody User user) {
+    public Optional<User> updateUser(@RequestBody User user) {
 
         return userService.updateUser(user);
 

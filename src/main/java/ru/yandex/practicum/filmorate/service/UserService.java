@@ -7,6 +7,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,11 +18,11 @@ public class UserService {
         return userStorage.getUsers();
     }
 
-    public User addUser(User user) {
+    public Optional<User> addUser(User user) {
         return userStorage.addUser(user);
     }
 
-    public User updateUser(User user) {
+    public Optional<User> updateUser(User user) {
         if (!userStorage.ifUserExists(user.getId())) {
             throw new NotFoundException("пользователя с ID " + user.getId() + " не найдено");
         }

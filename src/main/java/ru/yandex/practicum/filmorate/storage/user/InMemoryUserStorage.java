@@ -9,9 +9,11 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Component
+@Deprecated
 public class InMemoryUserStorage implements UserStorage {
     Map<Integer, User> users = new HashMap<>();
 
@@ -21,7 +23,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public User addUser(User user) {
+    public Optional<User> addUser(User user) {
         if (user.getName() == null) {
             user.setName(user.getLogin());
         }
@@ -29,11 +31,11 @@ public class InMemoryUserStorage implements UserStorage {
         user.setFriends(null);
         users.put(user.getId(), user);
         log.info("пользователь с id {} добавлен", user.getId());
-        return user;
+        return Optional.of(user);
     }
 
     @Override
-    public User updateUser(User user) {
+    public Optional<User> updateUser(User user) {
         if (user.getId() == null) {
             log.info("id должен быть указан");
             throw new ValidationException("id должен быть указан");
@@ -59,7 +61,7 @@ public class InMemoryUserStorage implements UserStorage {
             oldUser.setBirthday(user.getBirthday());
         }
         log.info("данные по пользователю {} обновлены", user.getId());
-        return oldUser;
+        return Optional.of(oldUser);
 
     }
 
